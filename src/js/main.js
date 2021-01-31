@@ -2,27 +2,27 @@ const _url = "https://api.quran.sutanlab.id/surah/"
 const homeContent = document.getElementById('content')
 
 function Home() {
-  homeContent.innerHTML = ` 
-  <div class="w-full h-72 rounded-2xl overflow-hidden mt-4 shadow-2xl font-sans">
-    <div id="image" class="w-full  rounded-2xl h-full relative flex items-center justify-center">
-      <div class="absolute z-10 w-1/2">
-        <p class="text-white text-xl mb-1 font-bold writer"></p>
-        <p class="text-sm italic text-white mb-3">"sebaik-baiknya ibadah umatku adalah membaca Al-quran (_HR. al-baihaiqi)"</p>
-        <a href="#baca-quran" class="bg-blue-300  block py-1 px-6 rounded-xl shadow-md absolute z-10 ">Baca sekarang <i class="text-xs fas fa-arrow-right"></i></a>
+  homeContent.innerHTML = 
+    `<div class="w-full h-72 rounded-2xl overflow-hidden mt-4 shadow-2xl font-sans ">
+      <div id="image" class="w-full  rounded-2xl h-full relative">
+        <div class="absolute z-10 w-full text-center p-4 h-full top-16">
+          <p class="text-white text-xl mb-1 font-bold writer"></p>
+          <p class="text-sm italic text-white mb-3">"sebaik-baiknya ibadah umatku adalah membaca Al-quran (_HR. al-baihaiqi)"</p>
+        <a href="#baca-quran" class="bg-yellow-300 font-bold  py-1 px-4 rounded-xl shadow-md ">Baca sekarang <i class="text-xs fas fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
   <div class="mt-4 bold w-full font-sans">
-    <h2 class="mb-2 text-xl font-bold">Dashboard</h2>
+    <h2 class="mb-2 text-xl font-bold dark:text-white ">Dashboard</h2>
     <div class="flex w-full">
-      <a href="#baca-quran" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu ">
+      <a href="#baca-quran" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu border">
       <div class="flex justify-center w-full">
       <img src="../images/baca.png" width="50" class="rounded-full">
       </div>
         <p class="mt-2 text-xl font-bold text-center">Baca Qur'an</p>
         <p class="text-xs text-center">Lengkap beserta terjemahan</p>
       </a>
-      <a href="#baca-doa" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu">
+      <a href="#baca-doa" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu border">
         <div class="flex justify-center w-full">
           <img src="../images/harian.png" width="50" class="rounded-full">
         </div>
@@ -31,14 +31,14 @@ function Home() {
       </a>
     </div>
     <div class="flex w-full mt-2">
-      <a href="#asmaul" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu">
+      <a href="#asmaul" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu border">
       <div class="flex justify-center w-full">
-      <img src="../images/asmaul.png" width="50" class="rounded-full">
+      <img src="../images/asmaull.png" width="50" class="rounded-full">
     </div>
     <p class="mt-2 text-xl font-bold text-center">Asmaul Husna</p>
     <p class="text-xs text-center">99 doa asmaul-husna beserta terjemahan</p>
       </a>
-      <a href="#bacaan-shalat" class="block w-1/2 bg-white rounded dark:bg-selfmode dark:text-white shadow-xl mr-2 p-4 menu">
+      <a href="#bacaan-shalat" class="block w-1/2 bg-white rounded dark:bg-selfmode dark:text-white shadow-xl mr-2 p-4 menu border">
       <div class="flex justify-center w-full">
         <img src="../images/doa.png" width="55" class="rounded-full">
       </div>
@@ -106,7 +106,7 @@ const renderPage = async () => {
                   articlesHTML +=
                     `
                   <div class="w-full mt-4 surah bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl">
-                    <div data-id="${article.number}" class="w-full p-3 rounded-xl preve surahId d-block">
+                    <div data-id="${article.number}" class="w-full p-3 rounded-xl card surahId d-block">
                       <div class="flex prevent justify-around items-center mb-2">
                         <div class=" prevent surah-header rounded-full">
                           ${article.number}
@@ -140,7 +140,7 @@ const renderPage = async () => {
       articlesHTML +=
         `
       <div class="w-full mt-4 surah bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl">
-        <div data-id="${article.number}" class="w-full p-3 rounded-xl preve surahId d-block">
+        <div data-id="${article.number}" class="w-full p-3 rounded-xl card surahId d-block">
           <div class="flex prevent justify-around items-center mb-2">
             <div class=" prevent surah-header rounded-full">
               ${article.number}
@@ -233,7 +233,7 @@ async function getSurahById(id) {
 
     surahId.verses.forEach(surah => {
       surahHTML += `
-            <div class="bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl mt-4 preve p-3 rounded-2xl">
+            <div class="bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl mt-4 card p-3 rounded-2xl">
             <div>
               <div class="surah-header rounded-full">
                 ${surah.number.inSurah}
@@ -307,7 +307,7 @@ async function doaPage() {
                 console.log('succes get data in cache')
                 data.data.forEach((article, i) => {
                   doaHTML += `
-                  <div class="mt-4 surah p-3 pb-6 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl preve rounded-xl">
+                  <div class="mt-4 surah p-3 pb-6 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl card rounded-xl">
                     <div>
                       <div class="flex justify-between items-center mb-4">
                         <div class="surah-header rounded-full">
@@ -336,7 +336,7 @@ async function doaPage() {
 
     data.data.forEach((article, i) => {
       doaHTML += `
-      <div class="mt-4 surah p-3 pb-6 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl preve rounded-xl">
+      <div class="mt-4 surah p-3 pb-6 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl card rounded-xl">
         <div>
           <div class="flex justify-between items-center mb-4">
             <div class="surah-header rounded-full">
@@ -398,7 +398,7 @@ async function renderAsmaul() {
                 console.log('succes get data in cache')
                 data.data.forEach(article => {
                   asmaulHTML += `
-                  <div class="mt-4 surah p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl preve rounded-xl">
+                  <div class="mt-4 surah p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl card rounded-xl">
                     <div>
                       <div class="flex justify-between items-center mb-4">
                         <div class="surah-header rounded-full">
@@ -427,7 +427,7 @@ async function renderAsmaul() {
 
     data.data.forEach(article => {
       asmaulHTML += `
-      <div class="mt-4 surah p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl preve rounded-xl">
+      <div class="mt-4 surah p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl card rounded-xl">
         <div>
           <div class="flex justify-between items-center mb-4">
             <div class="surah-header rounded-full">
