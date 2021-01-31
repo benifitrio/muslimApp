@@ -1,0 +1,20 @@
+{
+  "name": "muslimApps",
+  "description": "Alquran online dan offline",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#845ec2",
+  "theme_color": "#845ec2",
+  "icons": [
+    {
+      "src": "/images/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ const homeContent = document.getElementById('content')
 
 function Home() {
   homeContent.innerHTML = ` 
-  <div class="w-full h-72 rounded-2xl overflow-hidden mt-4 shadow-2xl ">
+  <div class="w-full h-72 rounded-2xl overflow-hidden mt-4 shadow-2xl font-sans">
     <div id="image" class="w-full  rounded-2xl h-full relative flex items-center justify-center">
       <div class="absolute z-10 w-1/2">
         <p class="text-white text-xl mb-1 font-bold writer"></p>
@@ -12,7 +12,7 @@ function Home() {
       </div>
     </div>
   </div>
-  <div class="mt-4 bold w-full">
+  <div class="mt-4 bold w-full font-sans">
     <h2 class="mb-2 text-xl font-bold">Dashboard</h2>
     <div class="flex w-full">
       <a href="#baca-quran" class="block w-1/2 bg-white dark:bg-selfmode dark:text-white rounded shadow-xl mr-2 p-4 menu ">
@@ -97,10 +97,45 @@ const renderPage = async () => {
     .start();
 
   try {
+    if ("caches" in window) {
+      caches.match(_url).then((response)=> {
+          if (response) {
+              response.json().then(function (data) {
+                console.log('succes get data in cache')
+                data.data.forEach(article => {
+                  articlesHTML +=
+                    `
+                  <div class="w-full mt-4 surah bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl">
+                    <div data-id="${article.number}" class="w-full p-3 rounded-xl preve surahId d-block">
+                      <div class="flex prevent justify-around items-center mb-2">
+                        <div class=" prevent surah-header rounded-full">
+                          ${article.number}
+                        </div>
+                        <div class=" prevent surah-latin text-xl font-medium">
+                          ${article.name.transliteration.id} : ${article.numberOfVerses } Ayat
+                        </div>
+                        <div class="prevent p-2">
+                          <i class="prevent fas fa-heart"></i>
+                        </div>
+                      </div>
+                      <div class=" prevent surah-body w-full text-right text-3xl mb-2">
+                          ${article.name.short}
+                      </div>
+                      <hr>
+                      <div class="prevent w-full text-right text-sm italic">
+                          Artinya - ${article.name.translation.id}
+                        </div>
+                    </div>
+                  </div>`;
+              });
+            })
+          }
+      })
+    }
+   
     const response = await fetch(_url)
     const data = await response.json()
-    console.log(data.data)
-
+  
     data.data.forEach(article => {
       articlesHTML +=
         `
@@ -163,6 +198,21 @@ async function getSurahById(id) {
   let surahHTML = "";
 
   try {
+    workbox.routing.registerRoute(
+  new RegExp('https://api.quran.sutanlab.id/surah/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'alquran-apps',
+        plugins: [
+          new workbox.cacheableResponse.Plugin({
+            statuses: [200],
+          }),
+          new workbox.expiration.Plugin({
+            maxAgeSeconds: 60 * 60 * 24 * 365,
+            maxEntries: 30,
+          }),
+        ],
+    })
+);
     const response = await fetch(`${_url}${id}`)
     const data = await response.json()
     const surahId = data.data
@@ -250,6 +300,37 @@ async function doaPage() {
   const doaContent = document.querySelector(".all-surah")
   doaContent.innerHTML = loaderTemplate()
   try {
+    if ("caches" in window) {
+      caches.match('https://islamic-api-zhirrr.vercel.app/api/doaharian').then((response)=> {
+          if (response) {
+              response.json().then((data)=> {
+                console.log('succes get data in cache')
+                data.data.forEach((article, i) => {
+                  doaHTML += `
+                  <div class="mt-4 surah p-3 pb-6 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl preve rounded-xl">
+                    <div>
+                      <div class="flex justify-between items-center mb-4">
+                        <div class="surah-header rounded-full">
+                          ${i+1}
+                        </div>
+                        <div class="doa surah-latin text-sm font-medium">
+                          ${article.title}
+                        </div>
+                    </div>
+                    <div class="surah-body w-full text-right text-3xl">
+                          ${article.arabic}
+                      </div>
+                      <div class="surah-latin w-full text-right text-sm mt-2 italic mt-4">
+                        "${article.translation}"
+                      </div>
+                    </div>
+                  </div>`;
+                });
+            })
+          }
+      })
+    }
+   
     const response = await fetch('https://islamic-api-zhirrr.vercel.app/api/doaharian')
     const data = await response.json()
 
@@ -274,8 +355,7 @@ async function doaPage() {
         </div>
       </div>`;
     });
-    
-    console.log( doaContent.innerHTML)
+  
     doaContent.innerHTML = doaHTML;
     document.title = 'Doa Harian'
 
@@ -311,6 +391,37 @@ async function renderAsmaul() {
   const asmaulPage = document.getElementById('asmaul')
   asmaulPage.innerHTML = loaderTemplate()
   try {
+    if ("caches" in window) {
+      caches.match('https://islamic-api-zhirrr.vercel.app/api/asmaulhusna').then((response)=> {
+          if (response) {
+              response.json().then((data)=> {
+                console.log('succes get data in cache')
+                data.data.forEach(article => {
+                  asmaulHTML += `
+                  <div class="mt-4 surah p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl preve rounded-xl">
+                    <div>
+                      <div class="flex justify-between items-center mb-4">
+                        <div class="surah-header rounded-full">
+                          ${article.index}
+                        </div>
+                        <div class="doa surah-latin text-xl font-medium">
+                          ${article.latin}
+                        </div>
+                    </div>
+                    <div class="surah-body w-full text-right text-3xl">
+                          ${article.arabic}
+                      </div>
+                      <div class="surah-latin w-full text-right text-sm mt-2 italic mt-4">
+                        "${article.translation_id}"
+                      </div>
+                    </div>
+                  </div>`;
+                });            
+            })
+          }
+      })
+    }
+    
     const response = await fetch('https://islamic-api-zhirrr.vercel.app/api/asmaulhusna')
     const data = await response.json()
 
@@ -349,7 +460,7 @@ async function renderPageSha() {
       <div class="w-full font-bold text-3xl text-center mb-2">
         SHALAT
       </div>
-      <div class="w-full text-sm mb-4">
+      <div class="w-full text-sm mb-4 font-sans">
         <p>Salah satu di antara kewajiban mutlak yang harus di laksanakan oleh setiap muslim mukalaf menurut perhitungan syariat baik itu ketika dia sehat atau sakit adalah melaksanakan sholat wajib 5 waktu dalam sehari semalam. Kewajiban melaksanakan sholat 5 waktu ini tidak seperti ibadah haji yang memiliki syarat khusus, akan tetapi dalam sholat selagi orang tersebut dalam keadaan akalnya masih sehat dan normal, maka wajib untuk mendirikan sholat.
         </p>
         <p>
@@ -520,7 +631,7 @@ async function renderPageSha() {
 
 function aboutPage() {
   homeContent.innerHTML = `
-  <div class="mt-4 surah p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl rounded-2xl">
+  <div class="mt-4 surah font-sans p-3 d-block bg-bglightmode text-textlightmode dark:bg-selfmode dark:text-white shadow-2xl rounded-2xl">
   <h2 class="text-xl font-bold mb-3">Tentang MuslimApp</h2>
   <p class="text-sm"> MuslimApp adalah aplikasi web progresif untuk menyajikan data Al-Qur'an, doa-doa harian, asmaul-husna serta bacaan shalat semuanya dilengkapi dengan terjamahannya.
   untuk Alquran disertakan juga Audio di setiap surah.</p>

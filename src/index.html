@@ -7,14 +7,14 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="description" content="Al Qur'an dan Terjemahan Berbahasa Indonesia." />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<meta name="theme-color" content="#15811d" />
-	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+	<meta name="theme-color" content="#845ec2" />
+	<link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+	<link rel="manifest" href="/manifest.json">
 	<link rel="stylesheet" href="./css/styles.css" />
 	<link rel="stylesheet" href="./tailwind.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body class="bg-white dark:bg-black">
@@ -24,10 +24,8 @@
 		</section>
 		<header class="bg-white dark:bg-gray-300 p-3 shadow-xl h-16 rounded-b-xl">
 			<nav class="flex justify-between items-center">
-				<div class="items-center flex">
-					<img src="./images/images.jpg" width="50" alt="" class="rounded-full bg-white">
-					<a href="/" class="title-heading text-2xl font-bold ml-2">بِسْمِ اللهِ الرَّحْمنِ الرَّحِيْمِ</a>
-				</div>
+				<img src="./images/icon.jpg" width="50" alt="" class="rounded-full bg-white">
+				<a href="/" class="title-heading text-2xl font-bold ml-2">بِسْمِ اللهِ الرَّحْمنِ الرَّحِيْمِ</a>
 				<label class="switch text-yellow-500">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
 						xmlns="http://www.w3.org/2000/svg">
@@ -46,12 +44,31 @@
 
 		</div>
 	</div>
+	<footer class="fixed bottom-14 flex justify-center items-center w-full p-4 text-sm" >
+		<p class="footer p-2 rounded-xl text-white">Dibuat dengan <i class="fas fa-heart text-red-500 mx-2"></i> Beni Fitrio</p>
+	</footer>
 
 	<script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
 	<script src="/js/main.js" charset="utf-8"></script>
 	<script src="/js/nav.js" charset="utf-8"></script>
 	<script src="/js/loading.js" charset="utf-8"></script>
 	<script src="/js/darkmode.js" charset="utf-8"></script>
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", function () {
+				this.navigator.serviceWorker
+					.register("/service-worker.js")
+					.then(function () {
+						console.log("Pendaftaran serviceWorker berhasil");
+					})
+					.catch(function () {
+						// console.log("Pendaftaran serviceWorker gagal");
+					});
+			});
+		} else {
+			console.log("ServiceWorker belum didukung browser");
+		}
+	</script>
 </body>
 
 </html>

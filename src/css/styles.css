@@ -23,14 +23,12 @@
 	  --fontColor: var(--white);
 	}
    */
-body{
-	font-family: Poppins;
-}
-
 #image{
 	background-image: url('../images/bg.jpg');
 }
-
+.footer{
+	background-color: #350b40;
+}
 a.menu:hover{
 	transform: scale(1.01);
 }
